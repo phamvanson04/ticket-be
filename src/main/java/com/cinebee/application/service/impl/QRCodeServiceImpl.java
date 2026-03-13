@@ -58,15 +58,14 @@ public class QRCodeServiceImpl implements QRCodeService {
     public String generateQRCodeData(Long ticketId) {
         Ticket ticket = ticketRepository.findById(ticketId)
             .orElseThrow(() -> new RuntimeException("Ticket not found"));
-            
-        // Táº¡o data cho QR code (cÃ³ thá»ƒ encrypt náº¿u cáº§n)
+
         return String.format(
             "CINEBEE_TICKET|ID:%d|MOVIE:%s|THEATER:%s|SHOWTIME:%s|SEAT:%s|PRICE:%.0f",
             ticket.getId(),
             ticket.getShowtime().getMovie().getTitle(),
             ticket.getShowtime().getRoom().getTheater().getName(),
             ticket.getShowtime().getStartTime().format(DateTimeFormatter.ofPattern("dd/MM/yyyy HH:mm")),
-            ticket.getSeat().getSeatNumber(), // Single seat
+            ticket.getSeat().getSeatNumber(),
             ticket.getPrice()
         );
     }

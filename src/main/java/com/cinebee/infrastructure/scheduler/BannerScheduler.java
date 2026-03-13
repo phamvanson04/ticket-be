@@ -15,8 +15,7 @@ import java.util.List;
 public class BannerScheduler {
     @Autowired
     private BannerRepository bannerRepository;
-    // fixedRate = 5000
-    // Cháº¡y má»—i ngÃ y lÃºc 0h05 sÃ¡ng
+
     @Scheduled(fixedRate = 5000)
     public void updateBannerStatus() {
         LocalDate today = LocalDate.now();
@@ -26,19 +25,18 @@ public class BannerScheduler {
         for (Banner banner : allBanners) {
             boolean shouldBeActive = banner.getStartDate() != null 
                 && banner.getEndDate() != null
-                && !today.isBefore(banner.getStartDate())  // today >= startDate
-                && !today.isAfter(banner.getEndDate());    // today <= endDate
+                && !today.isBefore(banner.getStartDate())
+                && !today.isAfter(banner.getEndDate());
 
-            // Chá»‰ cáº­p nháº­t náº¿u tráº¡ng thÃ¡i thay Ä‘á»•i
             if (banner.isActive() != shouldBeActive) {
                 banner.setActive(shouldBeActive);
                 hasChanges = true;
                 
                 if (shouldBeActive) {
-                    log.info("[BannerScheduler] âœ… Banner ID {} '{}' Ä‘Ã£ Ä‘Æ°á»£c KÃCH HOáº T (trong thá»i gian hiá»‡u lá»±c)", 
+                    log.info("[BannerScheduler] Banner ID {} '{}' activated", 
                         banner.getId(), banner.getTitle());
                 } else {
-                    log.info("[BannerScheduler] âŒ Banner ID {} '{}' Ä‘Ã£ bá»‹ VÃ” HIá»†U HÃ“A (háº¿t háº¡n hoáº·c chÆ°a Ä‘áº¿n ngÃ y)", 
+                    log.info("[BannerScheduler] Banner ID {} '{}' deactivated", 
                         banner.getId(), banner.getTitle());
                 }
             }
@@ -46,7 +44,7 @@ public class BannerScheduler {
 
         if (hasChanges) {
             bannerRepository.saveAll(allBanners);
-            log.info("[BannerScheduler] ðŸ”„ ÄÃ£ cáº­p nháº­t tráº¡ng thÃ¡i banner.");
+            log.info("[BannerScheduler] Banner statuses updated.");
         }
     }
 }

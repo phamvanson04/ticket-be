@@ -18,7 +18,6 @@ public class CacheWarmer implements ApplicationRunner {
     public void run(ApplicationArguments args) throws Exception {
         log.info("Application started. Warming up active banners cache...");
         try {
-            // âœ¨ DÃ¹ng method cÃ³ cache BannerResponse thay vÃ¬ Banner entity
             bannerService.getActiveBannerResponses();
             log.info("Active banners cache has been successfully warmed up.");
         } catch (Exception e) {

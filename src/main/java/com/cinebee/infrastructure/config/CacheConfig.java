@@ -22,8 +22,8 @@ public class CacheConfig {
                 .disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
 
         return RedisCacheConfiguration.defaultCacheConfig()
-                .entryTtl(Duration.ofMinutes(10)) // Thá»i gian sá»‘ng máº·c Ä‘á»‹nh cá»§a cache
-                .disableCachingNullValues() // KhÃ´ng cache giÃ¡ trá»‹ null
+                .entryTtl(Duration.ofMinutes(10))
+                .disableCachingNullValues()
                 .serializeValuesWith(SerializationPair.fromSerializer(new GenericJackson2JsonRedisSerializer(objectMapper)));
     }
 
@@ -35,7 +35,7 @@ public class CacheConfig {
                 .withCacheConfiguration("movieDetails",
                         RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofHours(1)))
                 .withCacheConfiguration("activeBanners",
-                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10))); // âœ¨ ThÃªm cache cho banner
+                        RedisCacheConfiguration.defaultCacheConfig().entryTtl(Duration.ofMinutes(10)));
     }
 }
 

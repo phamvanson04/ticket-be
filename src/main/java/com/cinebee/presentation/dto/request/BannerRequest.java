@@ -12,6 +12,6 @@ public class BannerRequest {
     private LocalDate startDate;
     private LocalDate endDate;
     private Long movieId;
-    private Integer priority; // ThÃªm trÆ°á»ng priority
+    private Integer priority;
 
 }

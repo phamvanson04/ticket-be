@@ -38,8 +38,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         String requestUri = request.getRequestURI();
 
-        // Bá» qua JWT filter cho cÃ¡c Ä‘Æ°á»ng dáº«n trong White_List
-        for (String pattern : com.cinebee.infrastructure.config.SecurityConfig.White_List) {
+        for (String pattern : com.cinebee.infrastructure.config.SecurityConfig.PUBLIC_ENDPOINTS) {
             if (pathMatcher.match(pattern, requestUri)) {
                 filterChain.doFilter(request, response);
                 return;
@@ -49,7 +48,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         String token = getJwtFromRequest(request);
 
         if (token != null && jwtConfig.validateToken(token)) {
-            // Kiá»ƒm tra blacklist qua TokenService
             if (tokenService.isTokenBlacklisted(token)) {
                 response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token is blacklisted");
                 return;
@@ -65,7 +63,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
-        // Æ¯u tiÃªn láº¥y accessToken tá»« cookie HttpOnly
         if (request.getCookies() != null) {
             for (jakarta.servlet.http.Cookie cookie : request.getCookies()) {
                 if ("accessToken".equals(cookie.getName())) {
@@ -73,7 +70,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         }
-        // Fallback: láº¥y tá»« header Authorization náº¿u khÃ´ng cÃ³ cookie
         String bearerToken = request.getHeader("Authorization");
         if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
             return bearerToken.substring(7);

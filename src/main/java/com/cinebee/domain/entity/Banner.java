@@ -34,8 +34,6 @@ public class Banner implements Serializable {
     @Column(name = "is_active")
     private boolean isActive;
 
-    // ThÃªm trÆ°á»ng priority Ä‘á»ƒ kiá»ƒm soÃ¡t thá»© tá»± hiá»ƒn thá»‹
-    // Sá»‘ cÃ ng lá»›n cÃ ng Æ°u tiÃªn (banner má»›i sáº½ cÃ³ priority cao hÆ¡n)
     @Column(name = "priority")
     private Integer priority = 0;
 

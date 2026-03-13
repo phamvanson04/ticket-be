@@ -12,7 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -30,10 +30,7 @@ public class AuthController {
     @PostMapping("/logout")
     public ResponseEntity<?> logout(@CookieValue(name = "accessToken") String accessToken) {
         authService.logout(accessToken);
-        // XÃ³a cookie accessToken vÃ  refreshToken phÃ­a client
-        return ResponseEntity.ok(new HashMap<String, Object>() {{
-            put("message", "Logged out successfully");
-        }});
+        return ResponseEntity.ok(Map.of("message", "Logged out successfully"));
     }
 
     @PostMapping("/google")
@@ -45,26 +42,21 @@ public class AuthController {
     @PostMapping("/forgot-password")
     public ResponseEntity<?> forgotPassword(@Valid @RequestBody ForgotPasswordRequest request) {
         authService.forgotPassword(request.getEmail());
-        return ResponseEntity.ok(new HashMap<String, Object>() {{
-            put("message", "Password reset OTP sent to your email");
-        }});
+        return ResponseEntity.ok(Map.of("message", "Password reset OTP sent to your email"));
     }
 
     @PostMapping("/verify-otp")
     public ResponseEntity<?> verifyOtp(@Valid @RequestBody VerifyOtpRequest request) {
         String temporaryToken = authService.verifyOtp(request);
-        return ResponseEntity.ok(new HashMap<String, Object>() {{
-            put("message", "OTP verified successfully");
-            put("temporaryToken", temporaryToken);
-        }});
+        return ResponseEntity.ok(Map.of(
+                "message", "OTP verified successfully",
+                "temporaryToken", temporaryToken));
     }
 
     @PostMapping("/reset-password")
     public ResponseEntity<?> resetPassword(@Valid @RequestBody ResetPasswordRequest request) {
         authService.resetPassword(request);
-        return ResponseEntity.ok(new HashMap<String, Object>() {{
-            put("message", "Password reset successfully");
-        }});
+        return ResponseEntity.ok(Map.of("message", "Password reset successfully"));
     }
 }
 

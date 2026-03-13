@@ -49,10 +49,10 @@ public class Theater {
     private List<Room> rooms = new ArrayList<>();
 
     public enum TheaterStatus {
-        ACTIVE,       // Äang hoáº¡t Ä‘á»™ng
-        INACTIVE,     // KhÃ´ng hoáº¡t Ä‘á»™ng
-        COMING_SOON,  // Sáº¯p khai trÆ°Æ¡ng
-        UNDER_MAINTENANCE // Äang báº£o trÃ¬
+        ACTIVE,
+        INACTIVE,
+        COMING_SOON,
+        UNDER_MAINTENANCE
     }
 
     // Helper method to manage bidirectional relationship

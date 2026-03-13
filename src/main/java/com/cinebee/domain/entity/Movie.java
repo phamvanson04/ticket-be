@@ -62,16 +62,14 @@ public class Movie implements Serializable {
 
     @Column
     private Integer views = 0;
-
-    // ThÃªm cÃ¡c trÆ°á»ng má»›i
     @Column(length = 255)
-    private String actors; // Diá»…n viÃªn
+    private String actors;
 
     @Column(length = 255)
-    private String director; // Äáº¡o diá»…n
+    private String director;
 
     @Column(length = 100)
-    private String country; // Quá»‘c gia
+    private String country;
 
     @OneToOne(mappedBy = "movie", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
     private Trailer trailer;
