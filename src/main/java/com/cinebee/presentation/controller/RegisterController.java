@@ -11,7 +11,7 @@ import com.cinebee.presentation.dto.request.RegisterRequest;
 import com.cinebee.presentation.dto.response.UserResponse;
 import com.cinebee.domain.entity.User;
 import com.cinebee.application.mapper.UserMapper;
-import com.cinebee.application.service.AuthService;
+import com.cinebee.application.service.AuthenticationService;
 
 import jakarta.validation.Valid;
 
@@ -19,11 +19,11 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/auth/register")
 public class RegisterController {
     @Autowired
-    private AuthService authService;
+    private AuthenticationService authenticationService;
 
     @PostMapping
     public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
-        User user = authService.register(request);
+        User user = authenticationService.register(request);
         return ResponseEntity.ok(UserMapper.toUserResponse(user));
     }
 }

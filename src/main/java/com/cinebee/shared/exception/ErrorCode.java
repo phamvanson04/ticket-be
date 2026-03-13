@@ -59,7 +59,7 @@ public enum ErrorCode {
     // Banner-related errors
     BANNER_NOT_FOUND(8006, "Banner not found", HttpStatus.NOT_FOUND),
 
-    // AuthService errors
+    // Authentication service errors
     CAPTCHA_INVALID(8001, "Captcha is incorrect or expired", HttpStatus.BAD_REQUEST),
     USERNAME_OR_PHONE_INVALID(8002, "Username/email/phone is required and must be at least 3 characters", HttpStatus.BAD_REQUEST),
     PHONE_INVALID_FORMAT(8005, "Invalid Vietnamese phone number format (10 digits, starts with 0)", HttpStatus.BAD_REQUEST),

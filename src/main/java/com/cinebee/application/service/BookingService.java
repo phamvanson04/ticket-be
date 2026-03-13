@@ -5,7 +5,7 @@ import com.cinebee.presentation.dto.response.BookingResponse;
 
 import java.util.List;
 
-public interface TicketService {
+public interface BookingService {
 
     /**
      * Create a booking for selected seats.

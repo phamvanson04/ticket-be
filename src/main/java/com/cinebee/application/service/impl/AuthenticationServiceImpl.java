@@ -27,7 +27,7 @@ import com.cinebee.domain.entity.User;
 import com.cinebee.shared.exception.ApiException;
 import com.cinebee.shared.exception.ErrorCode;
 import com.cinebee.infrastructure.persistence.repository.UserRepository;
-import com.cinebee.application.service.AuthService;
+import com.cinebee.application.service.AuthenticationService;
 
 import com.cinebee.application.service.EmailService;
 import com.cinebee.application.service.GoogleOAuth2Service;
@@ -37,7 +37,7 @@ import com.cinebee.application.util.UsernameGenerator;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
-public class AuthServiceImpl implements AuthService {
+public class AuthenticationServiceImpl implements AuthenticationService {
     private static final Pattern EMAIL_PATTERN = Pattern.compile("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$");
     private static final String PHONE_REGEX = "^0[0-9]{9}$";
     private static final Pattern PHONE_PATTERN = Pattern.compile(PHONE_REGEX);

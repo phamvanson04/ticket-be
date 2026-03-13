@@ -10,7 +10,7 @@ import com.cinebee.presentation.dto.response.TokenResponse;
 import com.cinebee.domain.entity.User;
 import jakarta.servlet.http.HttpServletResponse;
 
-public interface AuthService {
+public interface AuthenticationService {
     User register(RegisterRequest request);
     TokenResponse login(LoginRequest request, HttpServletResponse response);
     TokenResponse refreshToken(String refreshToken, HttpServletResponse response);

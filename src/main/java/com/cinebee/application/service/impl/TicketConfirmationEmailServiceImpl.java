@@ -2,7 +2,7 @@ package com.cinebee.application.service.impl;
 
 import com.cinebee.domain.entity.Ticket;
 import com.cinebee.application.service.QRCodeService;
-import com.cinebee.application.service.TicketEmailService;
+import com.cinebee.application.service.TicketConfirmationEmailService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -20,7 +20,7 @@ import java.time.format.DateTimeFormatter;
 
 @Service
 @Slf4j
-public class TicketEmailServiceImpl implements TicketEmailService {
+public class TicketConfirmationEmailServiceImpl implements TicketConfirmationEmailService {
 
     @Autowired
     private JavaMailSender mailSender;

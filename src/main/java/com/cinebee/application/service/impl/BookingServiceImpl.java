@@ -15,7 +15,7 @@ import com.cinebee.infrastructure.persistence.repository.SeatRepository;
 import com.cinebee.infrastructure.persistence.repository.ShowtimeRepository;
 import com.cinebee.infrastructure.persistence.repository.TicketRepository;
 import com.cinebee.infrastructure.persistence.repository.UserRepository;
-import com.cinebee.application.service.TicketService;
+import com.cinebee.application.service.BookingService;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -37,7 +37,7 @@ import org.springframework.util.StringUtils;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class TicketServiceImpl implements TicketService {
+public class BookingServiceImpl implements BookingService {
 
   private final TicketRepository ticketRepository;
   private final UserRepository userRepository;

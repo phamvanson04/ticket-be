@@ -12,7 +12,7 @@ import com.cinebee.infrastructure.persistence.repository.PaymentRepository;
 import com.cinebee.infrastructure.persistence.repository.TicketRepository;
 import com.cinebee.infrastructure.persistence.repository.UserRepository;
 import com.cinebee.application.service.PaymentService;
-import com.cinebee.application.service.TicketEmailService;
+import com.cinebee.application.service.TicketConfirmationEmailService;
 import com.cinebee.shared.util.MoMoSecurityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -41,7 +41,7 @@ public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
-    private final TicketEmailService ticketEmailService;
+    private final TicketConfirmationEmailService ticketConfirmationEmailService;
 
     @Override
     @Transactional
@@ -211,7 +211,7 @@ public class PaymentServiceImpl implements PaymentService {
 
             try {
                 Ticket ticket = payment.getTicket();
-                ticketEmailService.sendTicketConfirmationEmail(ticket);
+                ticketConfirmationEmailService.sendTicketConfirmationEmail(ticket);
                 log.info("Ticket confirmation email sent for ticket {}", ticket.getId());
             } catch (Exception emailError) {
                 log.error("Failed to send confirmation email for ticket {}: {}",
@@ -242,7 +242,7 @@ public class PaymentServiceImpl implements PaymentService {
 
                 try {
                     Ticket ticket = payment.getTicket();
-                    ticketEmailService.sendTicketConfirmationEmail(ticket);
+                    ticketConfirmationEmailService.sendTicketConfirmationEmail(ticket);
                     log.info("Ticket confirmation email sent for ticket {} via return callback", ticket.getId());
                 } catch (Exception emailError) {
                     log.error("Failed to send confirmation email for ticket {} via return callback: {}",

@@ -2,7 +2,7 @@ package com.cinebee.presentation.controller;
 
 import com.cinebee.presentation.dto.request.BookingRequest;
 import com.cinebee.presentation.dto.response.BookingResponse;
-import com.cinebee.application.service.TicketService;
+import com.cinebee.application.service.BookingService;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,16 +21,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/tickets")
 @RequiredArgsConstructor
 @Slf4j
-public class TicketController {
+public class BookingController {
 
-  private final TicketService ticketService;
+  private final BookingService bookingService;
 
   /** Creates a booking for selected seats. */
   @PostMapping("/book")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<BookingResponse> createBooking(@RequestBody BookingRequest request) {
     log.info("Booking request received: {}", request);
-    BookingResponse response = ticketService.createBooking(request);
+    BookingResponse response = bookingService.createBooking(request);
     return ResponseEntity.status(HttpStatus.CREATED).body(response);
   }
 
@@ -38,7 +38,7 @@ public class TicketController {
   @GetMapping("/my-bookings")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<List<BookingResponse>> getUserBookings() {
-    List<BookingResponse> bookings = ticketService.getUserBookings();
+    List<BookingResponse> bookings = bookingService.getUserBookings();
     return ResponseEntity.ok(bookings);
   }
 
@@ -46,7 +46,7 @@ public class TicketController {
   @GetMapping("/{ticketId}")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<BookingResponse> getBookingDetails(@PathVariable Long ticketId) {
-    BookingResponse booking = ticketService.getBookingDetails(ticketId);
+    BookingResponse booking = bookingService.getBookingDetails(ticketId);
     return ResponseEntity.ok(booking);
   }
 
@@ -54,14 +54,14 @@ public class TicketController {
   @DeleteMapping("/{ticketId}")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
   public ResponseEntity<Void> cancelBooking(@PathVariable Long ticketId) {
-    ticketService.cancelBooking(ticketId);
+    bookingService.cancelBooking(ticketId);
     return ResponseEntity.noContent().build();
   }
 
   /** Returns available seats for one showtime. */
   @GetMapping("/showtimes/{showtimeId}/seats")
   public ResponseEntity<List<BookingResponse.SeatInfo>> getAvailableSeats(@PathVariable Long showtimeId) {
-    List<BookingResponse.SeatInfo> seats = ticketService.getAvailableSeats(showtimeId);
+    List<BookingResponse.SeatInfo> seats = bookingService.getAvailableSeats(showtimeId);
     return ResponseEntity.ok(seats);
   }
 }
