@@ -1,23 +1,18 @@
 package com.cinebee.domain.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.cinebee.domain.entity.base.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Rooms", uniqueConstraints = @UniqueConstraint(columnNames = { "theater_id", "name" }))
 @Getter
 @Setter
 @NoArgsConstructor
-public class Room {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Room extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "theater_id", nullable = false)
@@ -34,8 +29,5 @@ public class Room {
     @Column(name = "is_active")
     private Boolean isActive = true;
 
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
 }
 

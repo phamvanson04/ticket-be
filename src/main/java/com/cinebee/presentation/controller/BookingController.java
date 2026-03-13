@@ -1,6 +1,7 @@
 package com.cinebee.presentation.controller;
 
 import com.cinebee.presentation.dto.request.BookingRequest;
+import com.cinebee.presentation.dto.response.BaseResponse;
 import com.cinebee.presentation.dto.response.BookingResponse;
 import com.cinebee.application.service.BookingService;
 import java.util.List;
@@ -28,41 +29,42 @@ public class BookingController {
   /** Creates a booking for selected seats. */
   @PostMapping("/book")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  public ResponseEntity<BookingResponse> createBooking(@RequestBody BookingRequest request) {
+  public ResponseEntity<BaseResponse<BookingResponse>> createBooking(@RequestBody BookingRequest request) {
     log.info("Booking request received: {}", request);
     BookingResponse response = bookingService.createBooking(request);
-    return ResponseEntity.status(HttpStatus.CREATED).body(response);
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(BaseResponse.success(response, "Booking created successfully"));
   }
 
   /** Returns bookings of the current user. */
   @GetMapping("/my-bookings")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  public ResponseEntity<List<BookingResponse>> getUserBookings() {
+  public ResponseEntity<BaseResponse<List<BookingResponse>>> getUserBookings() {
     List<BookingResponse> bookings = bookingService.getUserBookings();
-    return ResponseEntity.ok(bookings);
+    return ResponseEntity.ok(BaseResponse.success(bookings, "Fetched bookings successfully"));
   }
 
   /** Returns booking details by ticket id. */
   @GetMapping("/{ticketId}")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  public ResponseEntity<BookingResponse> getBookingDetails(@PathVariable Long ticketId) {
+  public ResponseEntity<BaseResponse<BookingResponse>> getBookingDetails(@PathVariable Long ticketId) {
     BookingResponse booking = bookingService.getBookingDetails(ticketId);
-    return ResponseEntity.ok(booking);
+    return ResponseEntity.ok(BaseResponse.success(booking, "Fetched booking details successfully"));
   }
 
   /** Cancels a booking when payment has not completed. */
   @DeleteMapping("/{ticketId}")
   @PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-  public ResponseEntity<Void> cancelBooking(@PathVariable Long ticketId) {
+  public ResponseEntity<BaseResponse<Void>> cancelBooking(@PathVariable Long ticketId) {
     bookingService.cancelBooking(ticketId);
-    return ResponseEntity.noContent().build();
+    return ResponseEntity.ok(BaseResponse.success(null, "Booking cancelled successfully"));
   }
 
   /** Returns available seats for one showtime. */
   @GetMapping("/showtimes/{showtimeId}/seats")
-  public ResponseEntity<List<BookingResponse.SeatInfo>> getAvailableSeats(@PathVariable Long showtimeId) {
+  public ResponseEntity<BaseResponse<List<BookingResponse.SeatInfo>>> getAvailableSeats(@PathVariable Long showtimeId) {
     List<BookingResponse.SeatInfo> seats = bookingService.getAvailableSeats(showtimeId);
-    return ResponseEntity.ok(seats);
+    return ResponseEntity.ok(BaseResponse.success(seats, "Fetched available seats successfully"));
   }
 }
 

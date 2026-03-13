@@ -1,9 +1,9 @@
 package com.cinebee.domain.entity;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 import jakarta.persistence.*;
+import com.cinebee.domain.entity.base.BaseEntity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -13,12 +13,8 @@ import java.io.Serializable;
 @Getter
 @Setter
 @Table(name = "Movies")
-public class Movie implements Serializable {
+public class Movie extends BaseEntity implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
     @Column(nullable = false, length = 100)
     private String title;
@@ -46,9 +42,6 @@ public class Movie implements Serializable {
 
     @Column(name = "discount_percentage")
     private Double discountPercentage = 0.0;
-
-    @Column(name = "created_at")
-    private LocalDateTime createdAt;
 
     @Column(length = 255)
     private String othernames;

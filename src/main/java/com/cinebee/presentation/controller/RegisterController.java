@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cinebee.presentation.dto.request.RegisterRequest;
+import com.cinebee.presentation.dto.response.BaseResponse;
 import com.cinebee.presentation.dto.response.UserResponse;
 import com.cinebee.domain.entity.User;
 import com.cinebee.application.mapper.UserMapper;
@@ -22,9 +23,9 @@ public class RegisterController {
     private AuthenticationService authenticationService;
 
     @PostMapping
-    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
+    public ResponseEntity<BaseResponse<UserResponse>> register(@Valid @RequestBody RegisterRequest request) {
         User user = authenticationService.register(request);
-        return ResponseEntity.ok(UserMapper.toUserResponse(user));
+        return ResponseEntity.ok(BaseResponse.success(UserMapper.toUserResponse(user), "Register successful"));
     }
 }
 

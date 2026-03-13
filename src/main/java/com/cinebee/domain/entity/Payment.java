@@ -1,11 +1,10 @@
 package com.cinebee.domain.entity;
 
 import jakarta.persistence.*;
+import com.cinebee.domain.entity.base.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "Payments", indexes = {
@@ -14,10 +13,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Payment {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Payment extends BaseEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ticket_id", nullable = false)
@@ -38,9 +34,6 @@ public class Payment {
     @Column(nullable = false)
     private PaymentStatus paymentStatus = PaymentStatus.PENDING;
 
-    @Column(nullable = false, updatable = false)
-    private LocalDateTime createdAt;
-
     @Column(unique = true)
     private String orderId; // Unique ID for the transaction in our system
 
@@ -54,11 +47,6 @@ public class Payment {
 
     public enum PaymentStatus {
         PENDING, COMPLETED, FAILED, CANCELED
-    }
-
-    @PrePersist
-    protected void onCreate() {
-        this.createdAt = LocalDateTime.now();
     }
 
     public Payment(Ticket ticket, User user, String orderId, String requestId) {

@@ -1,12 +1,10 @@
 package com.cinebee.domain.entity;
 
 import jakarta.persistence.*;
+import com.cinebee.domain.entity.base.BaseEntity;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.hibernate.annotations.CreationTimestamp;
-
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,10 +13,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Theater {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class Theater extends BaseEntity {
 
     @Column(nullable = false, unique = true)
     private String name;
@@ -35,10 +30,6 @@ public class Theater {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private TheaterStatus status = TheaterStatus.ACTIVE;
-
-    @CreationTimestamp
-    @Column(updatable = false)
-    private LocalDateTime createdAt;
 
     @OneToMany(
         mappedBy = "theater",

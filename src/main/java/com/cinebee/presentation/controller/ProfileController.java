@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cinebee.presentation.dto.response.BaseResponse;
 import com.cinebee.presentation.dto.response.UserResponse;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -20,11 +21,11 @@ public class ProfileController {
     private UserService userService;
 
     @GetMapping("/profile")
-    public ResponseEntity<UserResponse> getProfile() {
+    public ResponseEntity<BaseResponse<UserResponse>> getProfile() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
         UserResponse userResponse = userService.getUserProfile(username);
-        return ResponseEntity.ok(userResponse);
+        return ResponseEntity.ok(BaseResponse.success(userResponse, "Fetched profile successfully"));
     }
 }
 

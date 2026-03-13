@@ -1,6 +1,7 @@
 package com.cinebee.presentation.controller;
 
 import com.cinebee.presentation.dto.request.BannerRequest;
+import com.cinebee.presentation.dto.response.BaseResponse;
 import com.cinebee.presentation.dto.response.BannerResponse;
 import com.cinebee.domain.entity.Banner;
 import com.cinebee.application.mapper.BannerMapper;
@@ -18,14 +19,14 @@ public class BannerController {
     private BannerService bannerService;
 
     @PostMapping("/add-banner")
-    public ResponseEntity<BannerResponse> addBanner(@RequestBody BannerRequest request) {
+    public ResponseEntity<BaseResponse<BannerResponse>> addBanner(@RequestBody BannerRequest request) {
         Banner banner = bannerService.createBanner(request);
         BannerResponse response = BannerMapper.toBannerResponse(banner);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(BaseResponse.success(response, "Banner created successfully"));
     }
 
     @PostMapping("/update-banner/{movieId}")
-    public ResponseEntity<BannerResponse> updateBannerByMovie(
+    public ResponseEntity<BaseResponse<BannerResponse>> updateBannerByMovie(
             @PathVariable Long movieId, 
             @RequestBody BannerRequest request) {
 
@@ -41,32 +42,32 @@ public class BannerController {
         }
 
         BannerResponse response = BannerMapper.toBannerResponse(result);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(BaseResponse.success(response, "Banner updated successfully"));
     }
 
     @DeleteMapping("/delete-banner/{id}")
-    public ResponseEntity<BannerResponse> deleteBanner(@PathVariable Long id) {
+    public ResponseEntity<BaseResponse<BannerResponse>> deleteBanner(@PathVariable Long id) {
         Banner deletedBanner = bannerService.deleteBanner(id);
         BannerResponse response = BannerMapper.toBannerResponse(deletedBanner);
-        return ResponseEntity.ok(response);
+        return ResponseEntity.ok(BaseResponse.success(response, "Banner deleted successfully"));
     }
 
     @GetMapping("/active")
-    public ResponseEntity<List<BannerResponse>> getActiveBanners() {
+    public ResponseEntity<BaseResponse<List<BannerResponse>>> getActiveBanners() {
         List<BannerResponse> responses = bannerService.getActiveBannerResponses();
-        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(BaseResponse.success(responses, "Fetched active banners successfully"));
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<BannerResponse>> getAllBanners() {
+    public ResponseEntity<BaseResponse<List<BannerResponse>>> getAllBanners() {
         List<BannerResponse> responses = bannerService.getAllBannerResponses();
-        return ResponseEntity.ok(responses);
+        return ResponseEntity.ok(BaseResponse.success(responses, "Fetched banners successfully"));
     }
 
     @PostMapping("/fix-priorities")
-    public ResponseEntity<String> fixNullPriorities() {
+    public ResponseEntity<BaseResponse<String>> fixNullPriorities() {
         bannerService.fixNullPriorities();
-        return ResponseEntity.ok("Banner priorities normalized");
+        return ResponseEntity.ok(BaseResponse.success("Banner priorities normalized", "Banner priorities fixed"));
     }
 }
 

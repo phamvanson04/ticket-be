@@ -12,10 +12,12 @@ import javax.imageio.ImageIO;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cinebee.presentation.dto.response.BaseResponse;
 import com.google.code.kaptcha.Producer;
 
 @RestController
@@ -27,7 +29,7 @@ public class CaptchaController {
     private StringRedisTemplate redisTemplate;
 
     @GetMapping("/captcha")
-    public Map<String, String> getCaptcha() throws Exception {
+    public ResponseEntity<BaseResponse<Map<String, String>>> getCaptcha() throws Exception {
         String capText = captchaProducer.createText();
         String key = UUID.randomUUID().toString();
         redisTemplate.opsForValue().set("captcha:" + key, capText, 3, TimeUnit.MINUTES);
@@ -40,7 +42,7 @@ public class CaptchaController {
         Map<String, String> result = new HashMap<>();
         result.put("captchaKey", key);
         result.put("captchaImg", "data:image/jpeg;base64," + base64Img);
-        return result;
+        return ResponseEntity.ok(BaseResponse.success(result, "Captcha generated successfully"));
     }
 }
 
