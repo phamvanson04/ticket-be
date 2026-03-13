@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "Seats", uniqueConstraints = @UniqueConstraint(columnNames = { "showtime_id", "seat_number" }))
+@Table(name = "Seats", uniqueConstraints = @UniqueConstraint(columnNames = {"showtime_id", "seat_number"}))
 @Getter
 @Setter
 public class Seat {
@@ -24,6 +24,13 @@ public class Seat {
     @Column(nullable = false)
     private RoomSeat.SeatType seatType = RoomSeat.SeatType.STANDARD;
 
+    @Column(nullable = false)
     private Boolean isAvailable = true;
-    private Double priceModifier;
+
+    @Column(nullable = false)
+    private Double priceModifier = 1.0;
+
+    @Version
+    @Column(nullable = false)
+    private Long version = 0L;
 }

@@ -10,20 +10,19 @@ import java.util.List;
 
 @Repository
 public interface TicketRepository extends JpaRepository<Ticket, Long> {
-    
-    // Find booked seats for a specific showtime
+
     @Query("SELECT s.seatNumber FROM Ticket t JOIN t.seat s WHERE t.showtime.id = :showtimeId AND t.isCancelled = false")
     List<String> findBookedSeatsByShowtime(@Param("showtimeId") Long showtimeId);
-    
-    // Find tickets by user
+
     List<Ticket> findByUserId(Long userId);
-    
-    // Find tickets by showtime
+
     List<Ticket> findByShowtimeId(Long showtimeId);
-    
-    // Find tickets by user and showtime
+
     List<Ticket> findByUserIdAndShowtimeId(Long userId, Long showtimeId);
-    
-    // Count tickets for a showtime
+
+    List<Ticket> findByBookingReference(String bookingReference);
+
+    boolean existsByShowtimeIdAndSeatIdAndIsCancelledFalse(Long showtimeId, Long seatId);
+
     long countByShowtimeId(Long showtimeId);
 }

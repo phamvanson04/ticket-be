@@ -9,7 +9,13 @@ import org.hibernate.annotations.CreationTimestamp;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Tickets")
+@Table(
+        name = "Tickets",
+        indexes = {
+                @Index(name = "idx_tickets_showtime_cancelled", columnList = "showtime_id, is_cancelled"),
+                @Index(name = "idx_tickets_booking_reference", columnList = "booking_reference")
+        }
+)
 @Getter
 @Setter
 @NoArgsConstructor
@@ -33,11 +39,14 @@ public class Ticket {
     @Column(nullable = false)
     private Double price;
 
+    @Column(name = "booking_reference", nullable = false, length = 64)
+    private String bookingReference;
+
     @CreationTimestamp
     @Column(nullable = false, updatable = false)
     private LocalDateTime bookedAt;
 
-    @Column(nullable = false)
+    @Column(name = "is_cancelled", nullable = false)
     private Boolean isCancelled = false;
 
     @Column(name = "cancelled_at")
@@ -45,8 +54,7 @@ public class Ticket {
 
     @Column
     private Integer ticketSales = 0;
-    
-    // Getter method for total price (same as price for single ticket)
+
     public Double getTotalPrice() {
         return this.price;
     }
