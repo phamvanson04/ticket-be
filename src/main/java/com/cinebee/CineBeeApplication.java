@@ -27,3 +27,4 @@ public class CineBeeApplication {
         SpringApplication.run(CineBeeApplication.class, args);
     }
 }
+
