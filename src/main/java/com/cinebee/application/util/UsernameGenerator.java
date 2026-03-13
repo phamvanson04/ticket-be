@@ -1,6 +1,7 @@
-package com.cinebee.shared.util;
+package com.cinebee.application.util;
 
 import com.cinebee.infrastructure.persistence.repository.UserRepository;
+import com.cinebee.shared.util.UserUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

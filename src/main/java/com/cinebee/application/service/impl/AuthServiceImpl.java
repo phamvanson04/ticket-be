@@ -32,7 +32,7 @@ import com.cinebee.application.service.AuthService;
 import com.cinebee.application.service.EmailService;
 import com.cinebee.application.service.GoogleOAuth2Service;
 import com.cinebee.application.service.TokenService;
-import com.cinebee.shared.util.UsernameGenerator;
+import com.cinebee.application.util.UsernameGenerator;
 
 import jakarta.servlet.http.HttpServletResponse;
 
