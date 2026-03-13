@@ -1,0 +1,30 @@
+package com.cinebee.presentation.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cinebee.presentation.dto.request.RegisterRequest;
+import com.cinebee.presentation.dto.response.UserResponse;
+import com.cinebee.domain.entity.User;
+import com.cinebee.application.mapper.UserMapper;
+import com.cinebee.application.service.AuthService;
+
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/auth/register")
+public class RegisterController {
+    @Autowired
+    private AuthService authService;
+
+    @PostMapping
+    public ResponseEntity<UserResponse> register(@Valid @RequestBody RegisterRequest request) {
+        User user = authService.register(request);
+        return ResponseEntity.ok(UserMapper.toUserResponse(user));
+    }
+}
+
