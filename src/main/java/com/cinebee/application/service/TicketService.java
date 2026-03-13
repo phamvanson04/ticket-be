@@ -6,37 +6,37 @@ import com.cinebee.presentation.dto.response.BookingResponse;
 import java.util.List;
 
 public interface TicketService {
-    
+
     /**
-     * Táº¡o booking cho gháº¿ Ä‘Ã£ chá»n
-     * @param request BookingRequest chá»©a showtimeId vÃ  danh sÃ¡ch gháº¿
-     * @return BookingResponse vá»›i thÃ´ng tin vÃ© Ä‘Ã£ táº¡o
+     * Create a booking for selected seats.
+     * @param request booking input containing showtimeId and selected seats
+     * @return booking summary
      */
     BookingResponse createBooking(BookingRequest request);
-    
+
     /**
-     * Láº¥y danh sÃ¡ch vÃ© cá»§a user hiá»‡n táº¡i
-     * @return Danh sÃ¡ch BookingResponse
+     * Get bookings of the current authenticated user.
+     * @return list of booking summaries
      */
     List<BookingResponse> getUserBookings();
-    
+
     /**
-     * Láº¥y thÃ´ng tin chi tiáº¿t 1 vÃ©
-     * @param ticketId ID cá»§a vÃ©
-     * @return BookingResponse
+     * Get booking details for one ticket.
+     * @param ticketId ticket identifier
+     * @return booking details
      */
     BookingResponse getBookingDetails(Long ticketId);
-    
+
     /**
-     * Há»§y vÃ© (chá»‰ khi chÆ°a thanh toÃ¡n)
-     * @param ticketId ID cá»§a vÃ© cáº§n há»§y
+     * Cancel a booking when payment is not completed.
+     * @param ticketId ticket identifier
      */
     void cancelBooking(Long ticketId);
-    
+
     /**
-     * Láº¥y danh sÃ¡ch gháº¿ cÃ³ sáºµn cho 1 suáº¥t chiáº¿u
-     * @param showtimeId ID cá»§a suáº¥t chiáº¿u
-     * @return Danh sÃ¡ch thÃ´ng tin gháº¿
+     * Get all currently available seats for a showtime.
+     * @param showtimeId showtime identifier
+     * @return available seat information
      */
     List<BookingResponse.SeatInfo> getAvailableSeats(Long showtimeId);
 }

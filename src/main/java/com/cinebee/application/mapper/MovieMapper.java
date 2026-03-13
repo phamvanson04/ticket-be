@@ -24,8 +24,8 @@ public class MovieMapper {
                 movie.getTitle(),
                 movie.getOthernames(),
                 movie.getRating(),
-                movie.getPosterUrl(), // img
-                0, // rank
+            movie.getPosterUrl(),
+            0,
                 movie.getDuration(),
                 movie.getGenre(),
                 movie.getActors(),
@@ -42,7 +42,6 @@ public class MovieMapper {
         Movie movie = new Movie();
         movie.setTitle(req.getTitle());
         movie.setOthernames(req.getOthernames());
-        // Äáº£m báº£o basePrice khÃ´ng null
         movie.setBasePrice(req.getBasePrice() != null ? req.getBasePrice() : 0.0);
         movie.setDuration(req.getDuration());
         movie.setGenre(req.getGenre());
@@ -54,7 +53,6 @@ public class MovieMapper {
         if (req.getReleaseDate() != null) {
             movie.setReleaseDate(req.getReleaseDate().toLocalDate());
         }
-        // Äáº£m báº£o discountPercentage khÃ´ng null
         movie.setDiscountPercentage(req.getDiscountPercentage() != null ? req.getDiscountPercentage() : 0.0);
         return movie;
     }

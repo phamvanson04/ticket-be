@@ -9,9 +9,8 @@ import java.util.List;
 @NoArgsConstructor
 public class BookingRequest {
     private Long showtimeId;
-    private List<String> seatNumbers; // Danh sÃ¡ch sá»‘ gháº¿ Ä‘Ã£ chá»n, vÃ­ dá»¥: ["A1", "A2"]
-    
-    // Constructor
+    private List<String> seatNumbers;
+
     public BookingRequest(Long showtimeId, List<String> seatNumbers) {
         this.showtimeId = showtimeId;
         this.seatNumbers = seatNumbers;

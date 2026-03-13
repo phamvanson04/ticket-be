@@ -12,7 +12,7 @@ public class TokenCookieUtil {
     public static void setTokenCookies(HttpServletResponse response, String accessToken, String refreshToken) {
         ResponseCookie refreshCookie = ResponseCookie.from("refreshToken", refreshToken)
                 .httpOnly(true)
-                .secure(false) // Äá»ƒ true náº¿u dÃ¹ng HTTPS
+                .secure(false)
                 .path("/")
                 .maxAge(REFRESH_TOKEN_MAX_AGE)
                 .sameSite("Strict")

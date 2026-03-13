@@ -6,7 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
-@Data // tá»± táº¡o getter, setter, toString, equals, hashCode
+@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

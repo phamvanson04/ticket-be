@@ -15,7 +15,7 @@ public class BannerMapper {
                 .endDate(banner.getEndDate())
                 .active(banner.isActive())
                 .movieId(banner.getMovie() != null ? banner.getMovie().getId() : null)
-                .priority(banner.getPriority()) // ThÃªm priority
+                .priority(banner.getPriority())
                 .build();
     }
 }
