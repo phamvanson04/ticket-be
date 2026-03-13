@@ -30,7 +30,6 @@ public class CaptchaController {
     public Map<String, String> getCaptcha() throws Exception {
         String capText = captchaProducer.createText();
         String key = UUID.randomUUID().toString();
-        // LÆ°u captcha vÃ o Redis vá»›i TTL 3 phÃºt
         redisTemplate.opsForValue().set("captcha:" + key, capText, 3, TimeUnit.MINUTES);
 
         BufferedImage image = captchaProducer.createImage(capText);
