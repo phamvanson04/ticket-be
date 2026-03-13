@@ -1,8 +1,8 @@
 package com.cinebee.application.service.impl;
 
-import com.cinebee.infrastructure.config.MomoConfig;
-import com.cinebee.presentation.dto.request.MomoPaymentRequest;
-import com.cinebee.presentation.dto.response.MomoPaymentResponse;
+import com.cinebee.infrastructure.config.MoMoConfig;
+import com.cinebee.presentation.dto.request.MoMoPaymentRequest;
+import com.cinebee.presentation.dto.response.MoMoPaymentResponse;
 import com.cinebee.domain.entity.Payment;
 import com.cinebee.domain.entity.Ticket;
 import com.cinebee.domain.entity.User;
@@ -13,7 +13,7 @@ import com.cinebee.infrastructure.persistence.repository.TicketRepository;
 import com.cinebee.infrastructure.persistence.repository.UserRepository;
 import com.cinebee.application.service.PaymentService;
 import com.cinebee.application.service.TicketEmailService;
-import com.cinebee.shared.util.MomoSecurityUtils;
+import com.cinebee.shared.util.MoMoSecurityUtils;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,7 +35,7 @@ import java.util.UUID;
 @Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
-    private final MomoConfig momoConfig;
+    private final MoMoConfig momoConfig;
     private final RestTemplate restTemplate;
     private final ObjectMapper objectMapper;
     private final PaymentRepository paymentRepository;
@@ -45,7 +45,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     @Override
     @Transactional
-    public MomoPaymentResponse createMomoPayment(MomoPaymentRequest request) {
+    public MoMoPaymentResponse createMomoPayment(MoMoPaymentRequest request) {
         String authenticatedUsername = SecurityContextHolder.getContext().getAuthentication().getName();
         log.info("Creating MoMo payment for user: {}, ticketId: {}", authenticatedUsername, request.getTicketId());
 
@@ -113,7 +113,7 @@ public class PaymentServiceImpl implements PaymentService {
 
         try {
             log.info("Raw signature string: {}", rawSignature);
-            String signature = MomoSecurityUtils.generateSignature(rawSignature, momoConfig.getSecretKey());
+            String signature = MoMoSecurityUtils.generateSignature(rawSignature, momoConfig.getSecretKey());
             log.info("Generated signature: {}", signature);
             momoRequestPayload.put("signature", signature);
 
@@ -129,7 +129,7 @@ public class PaymentServiceImpl implements PaymentService {
             log.info("MoMo Response: {}", momoApiResponse);
 
             if (momoApiResponse != null && "0".equals(momoApiResponse.get("errorCode").toString())) {
-                return new MomoPaymentResponse((String) momoApiResponse.get("payUrl"));
+                return new MoMoPaymentResponse((String) momoApiResponse.get("payUrl"));
             } else {
                 payment.setPaymentStatus(Payment.PaymentStatus.FAILED);
                 paymentRepository.save(payment);
@@ -193,7 +193,7 @@ public class PaymentServiceImpl implements PaymentService {
             "&extraData=" + momoIpnPayload.get("extraData");
 
         try {
-            String expectedSignature = MomoSecurityUtils.generateSignature(rawSignature, momoConfig.getSecretKey());
+            String expectedSignature = MoMoSecurityUtils.generateSignature(rawSignature, momoConfig.getSecretKey());
             if (!expectedSignature.equals(receivedSignature)) {
                 log.error("IPN VALIDATION FAILED for orderId {}: Signature mismatch.", orderId);
                 payment.setPaymentStatus(Payment.PaymentStatus.FAILED);
@@ -294,7 +294,7 @@ public class PaymentServiceImpl implements PaymentService {
                     "&extraData=" + (extraData != null ? extraData : "");
 
             log.info("Return Raw signature string: {}", rawSignature);
-            String expectedSignature = MomoSecurityUtils.generateSignature(rawSignature, momoConfig.getSecretKey());
+            String expectedSignature = MoMoSecurityUtils.generateSignature(rawSignature, momoConfig.getSecretKey());
             
             log.info("Return Signature verification - Expected: {}, Received: {}", expectedSignature, receivedSignature);
             return expectedSignature.equals(receivedSignature);

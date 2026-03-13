@@ -7,7 +7,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Formatter;
 
-public class MomoSecurityUtils {
+public class MoMoSecurityUtils {
 
     private static final String HMAC_SHA256 = "HmacSHA256";
 

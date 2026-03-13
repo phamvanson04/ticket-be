@@ -5,7 +5,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class MomoPaymentRequest {
+public class MoMoPaymentRequest {
     private Long ticketId;
 }
 

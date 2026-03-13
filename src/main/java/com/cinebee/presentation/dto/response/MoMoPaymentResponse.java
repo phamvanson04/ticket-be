@@ -7,7 +7,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @AllArgsConstructor
-public class MomoPaymentResponse {
+public class MoMoPaymentResponse {
     private String payUrl;
 }
 

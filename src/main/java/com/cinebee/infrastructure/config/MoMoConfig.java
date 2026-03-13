@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @ConfigurationProperties(prefix = "momo")
 @Getter
 @Setter
-public class MomoConfig {
+public class MoMoConfig {
     private String partnerCode;
     private String accessKey;
     private String secretKey;

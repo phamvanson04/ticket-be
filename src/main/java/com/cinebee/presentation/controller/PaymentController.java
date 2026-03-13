@@ -1,7 +1,7 @@
 package com.cinebee.presentation.controller;
 
-import com.cinebee.presentation.dto.request.MomoPaymentRequest;
-import com.cinebee.presentation.dto.response.MomoPaymentResponse;
+import com.cinebee.presentation.dto.request.MoMoPaymentRequest;
+import com.cinebee.presentation.dto.response.MoMoPaymentResponse;
 import com.cinebee.application.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,7 +21,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/momo/create")
-    public ResponseEntity<MomoPaymentResponse> createMomoPayment(@RequestBody MomoPaymentRequest request) {
+    public ResponseEntity<MoMoPaymentResponse> createMomoPayment(@RequestBody MoMoPaymentRequest request) {
         return ResponseEntity.ok(paymentService.createMomoPayment(request));
     }
 
