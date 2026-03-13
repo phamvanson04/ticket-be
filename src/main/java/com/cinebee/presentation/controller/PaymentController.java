@@ -1,7 +1,7 @@
 package com.cinebee.presentation.controller;
 
 import com.cinebee.presentation.dto.request.MomoPaymentRequest;
-import com.cinebee.presentation.dto.response.MomoResponse;
+import com.cinebee.presentation.dto.response.MomoPaymentResponse;
 import com.cinebee.application.service.PaymentService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,14 +21,14 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     @PostMapping("/momo/create")
-    public ResponseEntity<MomoResponse> createMomoPayment(@RequestBody MomoPaymentRequest request) {
+    public ResponseEntity<MomoPaymentResponse> createMomoPayment(@RequestBody MomoPaymentRequest request) {
         return ResponseEntity.ok(paymentService.createMomoPayment(request));
     }
 
     @PostMapping("/momo/ipn")
-    public ResponseEntity<Void> handleMomoIpn(@RequestBody Map<String, Object> ipnData) {
+    public ResponseEntity<Void> handleMomoIpn(@RequestBody Map<String, Object> momoIpnPayload) {
         try {
-            paymentService.handleMomoIpn(ipnData);
+            paymentService.handleMomoIpn(momoIpnPayload);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } catch (Exception e) {
             log.error("Error processing MoMo IPN, but returning 204 to stop retries. Error: {}", e.getMessage());
@@ -47,17 +47,15 @@ public class PaymentController {
         String errorCode = allParams.get("errorCode");
         String message = allParams.get("message");
         String signature = allParams.get("signature");
-        
-        // Use errorCode if resultCode is not present
+
         String actualResultCode = resultCode != null ? resultCode : errorCode;
-        
+
         log.info("Processing return: orderId={}, resultCode={}, errorCode={}", orderId, resultCode, errorCode);
-        
+
         try {
             if (orderId != null && actualResultCode != null) {
-                // SECURITY: Verify signature before trusting the result
                 boolean isValidSignature = paymentService.verifyMomoReturnSignature(allParams);
-                
+
                 if (isValidSignature) {
                     paymentService.handleMomoReturn(orderId, actualResultCode, message);
                     log.info("SECURE: Payment status updated after signature verification");
